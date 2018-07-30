@@ -1,12 +1,12 @@
 
 from v1 import conn,c
 
-class User:
+class CreateTables:
     def __init__(self):
         self.c=c
         self.conn=conn
         self.conn.autocommit=True
-    def create_tables(self):
+    def create_user_table(self):
         command=(
          
             '''CREATE TABLE IF NOT EXISTS users(
@@ -18,6 +18,28 @@ class User:
             )
 
         self.c.execute(command)
+
+
+class User:
+    def __init__(self, username, email, password):
+        self.username=username
+        self.email=email
+        self.password=password
+
+
+    def add_user(self):
+        command = '''INSERT INTO users (username, email, password)
+        VALUES (%s, %s, %s)
+        '''
+        c.execute(command, (self.username, self.email, self.password))
+
+    def login_user(self):
+        command ="SELECT email FROM users WHERE name =%s"
+        c.execute(command,(self.email))
+
+
+
+
        
 
 
