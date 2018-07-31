@@ -1,4 +1,4 @@
-
+from flask import jsonify
 from v1 import conn,c
 
 class CreateTables:
@@ -19,23 +19,27 @@ class CreateTables:
 
         self.c.execute(command)
 
-
 class User:
     def __init__(self, username, email, password):
         self.username=username
         self.email=email
         self.password=password
 
-
     def add_user(self):
         command = '''INSERT INTO users (username, email, password)
         VALUES (%s, %s, %s)
         '''
+       
         c.execute(command, (self.username, self.email, self.password))
 
     def login_user(self):
-        command ="SELECT email FROM users WHERE name =%s"
-        c.execute(command,(self.email))
+        command ="SELECT username FROM users WHERE email = %s AND password=%s"
+        c.execute(command,(self.email, self.password))
+        value=c.fetchone()
+        return value
+        
+       
+        
 
 
 

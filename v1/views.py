@@ -25,12 +25,17 @@ def register():
             data['password']
             )
         user.add_user()
-    
-       
         return jsonify("the registration was successful")
 @app.route('/api/v1/login' , methods=['POST'])
 def login():
-   pass
+    data = request.get_json()
+    user = User(None,data['email'],data['password'])
+    result=user.login_user()
+    if not result:
+        return jsonify("wrong password or email")
+   
+    return jsonify("you have been logged in")
+   
 
 
 
