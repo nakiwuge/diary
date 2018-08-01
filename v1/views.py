@@ -19,27 +19,23 @@ def register():
             return jsonify("please fill in email field")
         
         user = User(
-            data['username'], 
             data['email'], 
+            data['username'], 
             data['password']
             )
         user.add_user()
-        #token = create_access_token(identity=data['email'])
-        #return jsonify(token=token)
-        #return jsonify("the registration was successful")
+        return jsonify({"message":"the registration was successful"})
 
 @app.route('/api/v1/auth/login' , methods=['POST'])
 def login():
     data = request.get_json()
-    user = User(None,data['email'],data['password'])
+    user = User(data['email'],None,data['password'])
     result=user.login_user()
-    
-    if  result:
-        token = create_access_token(identity=result)
-        return jsonify(token=token)
-    else:    
-        return jsonify({"msg":"wrong password or email"})
-   
+    print (result[0])
+    if  not result:
+        return jsonify({"message":"wrong password or email"})
+    token = create_access_token(identity=result[0])
+    return jsonify(token=token)
     #return jsonify("you have been logged in")
 
 @app.route("/api/v1/entries", methods=['GET','POST'])   
@@ -47,20 +43,25 @@ def login():
 def entries():
     if request.method == 'POST':
         current_user = get_jwt_identity()
+        print(current_user)
         if not current_user:
             return jsonify({'message':'please login'})
         data = request.get_json()
-        post_entry = Entry(data['title'], data['date'], data['content'])
+        post_entry = Entry(current_user,data['title'], data['date'], data['content'])
+        
         post_entry.add_entry()
         return jsonify("entry has been added successfully")
 
     else:
-        get_entry=Entry.get_all_entries()
+        
         current_user = get_jwt_identity()
+        
         if not current_user:
             return jsonify({'message':'please login'})
-
-        return jsonify({"entries":get_entry})
+        get_entry=Entry(current_user,None,None,None)
+        result = get_entry.get_all_entries()
+        
+        return jsonify({"entries":result})
         
 
 
