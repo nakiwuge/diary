@@ -71,9 +71,18 @@ class Entry:
     @staticmethod   
     def get_entry_by_id(entry_id):
         command = "SELECT * FROM entries WHERE entry_id = %s "
-        c.execute(command,[entry_id])
+        c.execute(command,(entry_id,))
         value = c.fetchone()
         return value
+        
+
+    def modify_entry(self, entry_id):
+        command = "UPDATE entries SET title = %s , content = %s WHERE entry_id = %s  "
+        c.execute(command, (self.title, self.content, entry_id))
+        
+
+    
+
 
 
 

@@ -61,15 +61,28 @@ def entries():
         
         return jsonify({"entries":result})
 
-@app.route("/api/v1/entries/<int:entry_id>", methods=['GET', 'POST'])
+@app.route("/api/v1/entries/<int:entry_id>", methods=['GET', 'PUT'])
 @jwt_required
-def modify_entry(entry_id):
+def modify(entry_id):
     current_user = get_jwt_identity()
     if request.method == 'GET':
         if not current_user:
             return jsonify({'message':'please login'})
-    get_entry=Entry.get_entry_by_id(entry_id)
-    return jsonify({"entry":get_entry})
+        get_entry=Entry.get_entry_by_id(entry_id)
+        return jsonify({"entry":get_entry})
+
+    else:
+        data=request.get_json()
+        if not current_user:
+            return jsonify({'message':'please login'})
+        
+        get_entry=Entry(None,data['title'], None, data['content'])
+        get_entry.modify_entry(entry_id)
+        result = Entry.get_entry_by_id(entry_id)
+
+        return jsonify({"entry":result})
+
+
 
         
 
