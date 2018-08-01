@@ -68,7 +68,12 @@ class Entry:
         c.execute(command,(self.email,))
         value=c.fetchall()
         return value
-        
+    @staticmethod   
+    def get_entry_by_id(entry_id):
+        command = "SELECT * FROM entries WHERE entry_id = %s "
+        c.execute(command,[entry_id])
+        value = c.fetchone()
+        return value
 
 
 
