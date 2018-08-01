@@ -43,7 +43,11 @@ class User:
         '''
        
         c.execute(command, (self.email, self.username, self.password))
-
+    def check_duplicate(self):
+        command = "SELECT email FROM users where email = %s"
+        c.execute(command,(self.email,))
+        value = c.fetchone()
+        return value
     def login_user(self):
         command ="SELECT email FROM users WHERE email = %s AND password=%s"
         c.execute(command,(self.email, self.password))
