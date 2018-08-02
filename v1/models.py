@@ -89,11 +89,11 @@ class Entry:
     def modify_entry(self, entry_id):
         command = "UPDATE entries SET title = %s , content = %s WHERE entry_id = %s  "
         c.execute(command, (self.title, self.content, entry_id))
-    ''' chenking entries with same title '''   
+    ''' checking entries with same title '''   
     def check_entry_duplicate(self):
         command = "SELECT title FROM entries where email = %s"
         c.execute(command,(self.email,))
-        value = c.fetchone()
+        value = c.fetchall()
         return value
     
 

@@ -87,8 +87,10 @@ def entries():
         '''check if the entry exists'''
         duplicate = Entry(current_user, data['title'], None,None)
         find_dup = duplicate.check_entry_duplicate()
-        if find_dup:
-            return jsonify({"message":"entry alredy exists"})
+        print (find_dup)
+        for title in find_dup:
+            if title[0] == data['title']:
+                return jsonify({"message":"entry alredy exists"})
         ''' create an entry '''
         result=post_entry.add_entry()
         return jsonify({
@@ -144,7 +146,7 @@ def modify(entry_id):
             return jsonify({"message":"please add title"})
         elif  'content' not in data or data['content'].strip()=="":
             return jsonify({"message":"please add content"})
-        get_entry=Entry(None,data['title'], None, data['content'])
+        get_entry=Entry(None,data['title'], None, data['content']) 
         ''' modify entry'''
         get_entry.modify_entry(entry_id)
         result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
