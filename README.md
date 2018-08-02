@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.com/zellymiriam/diary.svg?branch=test)](https://travis-ci.com/zellymiriam/diary)
 
+[![Coverage Status](https://coveralls.io/repos/github/zellymiriam/diary/badge.svg?branch=master)](https://coveralls.io/github/zellymiriam/diary?branch=master)
+
 - Diary is an online journal where users can pen down their thoughts and feelings.
 
 #Getting Started
