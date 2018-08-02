@@ -9,8 +9,6 @@ class EntryTestCase(unittest.TestCase):
         self.tester = app.test_client(self)
         db.create_table() 
 
-   
-
     def test_valid_user_registration(self):
         response = self.tester.post(
             '/api/v1/auth/signup',
@@ -85,6 +83,17 @@ class EntryTestCase(unittest.TestCase):
             content_type='application/json'
         )
         self.assertIn(b"please fill in a valid email adress", response.data)
+
+    def test_missing_email_field(self):
+        response = self.tester.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "username":"mim" ,
+                "password":"123", 
+                "confirm password":"123"}),
+            content_type='application/json'
+        )
+        self.assertIn(b"please add email", response.data)
 
     def test_duplicate_emails(self):
         self.tester.post(
@@ -197,6 +206,145 @@ class EntryTestCase(unittest.TestCase):
             content_type='application/json' 
         )
         self.assertIn(b"please add content", response.data)
+
+    def test_for_duplicate_title(self):
+        self.tester.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "username":"mim" ,
+                "email":"mim@gmail.com",
+                "password":"123", 
+                "confirm password":"123"}),
+            content_type='application/json'
+            )
+    
+        resp1 = self.tester.post(
+            '/api/v1/auth/login',
+            data=json.dumps({"email":"mim@gmail.com", "password":"123"}),
+            content_type='application/json', 
+        )
+        token=json.loads(resp1.data.decode())["token"]
+       
+        response = self.tester.post(
+            '/api/v1/entries',
+            headers= dict(Authorization='Bearer '+ token),
+            data=json.dumps({"title":"anything","content":"something"}),
+            content_type='application/json' 
+        )
+        response = self.tester.post(
+            '/api/v1/entries',
+            headers= dict(Authorization='Bearer '+ token),
+            data=json.dumps({"title":"anything","content":"something"}),
+            content_type='application/json' 
+        )
+        self.assertIn(b"entry alredy exists", response.data)
+
+    
+    def test_for_succefully_add_entry(self):
+        self.tester.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "username":"mim" ,
+                "email":"mim@gmail.com",
+                "password":"123", 
+                "confirm password":"123"}),
+            content_type='application/json'
+            )
+    
+        resp1 = self.tester.post(
+            '/api/v1/auth/login',
+            data=json.dumps({"email":"mim@gmail.com", "password":"123"}),
+            content_type='application/json', 
+        )
+        token=json.loads(resp1.data.decode())["token"]
+       
+        response = self.tester.post(
+            '/api/v1/entries',
+            headers= dict(Authorization='Bearer '+ token),
+            data=json.dumps({"title":"anything","content":"something"}),
+            content_type='application/json' 
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"entry has been added successfully", response.data)
+
+    def test_for_getting_entries(self):
+        self.tester.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "username":"mim" ,
+                "email":"mim@gmail.com",
+                "password":"123", 
+                "confirm password":"123"}),
+            content_type='application/json'
+            )
+    
+        resp1 = self.tester.post(
+            '/api/v1/auth/login',
+            data=json.dumps({"email":"mim@gmail.com", "password":"123"}),
+            content_type='application/json', 
+        )
+        token=json.loads(resp1.data.decode())["token"]
+       
+        response = self.tester.post(
+            '/api/v1/entries',
+            headers= dict(Authorization='Bearer '+ token),
+            data=json.dumps({
+                "entry_id":"1",
+                "date":"02-18-18", 
+                "title":"anything",
+                "content":"something"
+                }),
+            content_type='application/json' 
+        )
+        response = self.tester.get(
+            '/api/v1/entries/1',
+            headers= dict(Authorization='Bearer '+ token),
+            content_type='application/json' 
+        )
+        self.assertEqual(response.status_code, 200)
+    def test_for_succefull_update(self):
+        self.tester.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "username":"mim" ,
+                "email":"mim@gmail.com",
+                "password":"123", 
+                "confirm password":"123"}),
+            content_type='application/json'
+            )
+    
+        resp1 = self.tester.post(
+            '/api/v1/auth/login',
+            data=json.dumps({"email":"mim@gmail.com", "password":"123"}),
+            content_type='application/json', 
+        )
+        token=json.loads(resp1.data.decode())["token"]
+       
+        response = self.tester.post(
+            '/api/v1/entries',
+            headers= dict(Authorization='Bearer '+ token),
+            data=json.dumps({
+                "entry_id":"1",
+                "date":"02-18-18", 
+                "title":"anything",
+                "content":"something"
+                }),
+            content_type='application/json' 
+        )
+        response = self.tester.put(
+            '/api/v1/entries/1',
+            headers= dict(Authorization='Bearer '+ token),
+            data=json.dumps({
+                "entry_id":"1",
+                "date":"02-18-18", 
+                "title":"any",
+                "content":"something"
+                }),
+            content_type='application/json' 
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"the update was successfully", response.data)
+      
       
 
     def tearDown(self):

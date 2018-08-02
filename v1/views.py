@@ -74,7 +74,6 @@ def entries():
         elif  'content' not in data or data['content'].strip()=="":
             return jsonify({"message":"please add content"})
         post_entry = Entry(current_user,data['title'], date , data['content'])
-
         duplicate = Entry(current_user, data['title'], None,None)
         find_dup = duplicate.check_entry_duplicate()
         if find_dup:
@@ -84,13 +83,11 @@ def entries():
         return jsonify({
             "message":"entry has been added successfully",
             "entriey":data
-            })
+            }),200
 
     else:
         all_entries=[]
         current_user = get_jwt_identity()
-        if not current_user:
-            return jsonify({'message':'please login'})
         get_entry=Entry(current_user,None,None,None)
         result = get_entry.get_all_entries()
         if not result:
@@ -120,7 +117,7 @@ def modify(entry_id):
         entries['title']=result[2]
         entries['content']=result[4]
         all_entries.append(entries) 
-        return jsonify({"entry":all_entries})
+        return jsonify({"entry":all_entries}),200
 
     else:
         data=request.get_json()
@@ -132,7 +129,10 @@ def modify(entry_id):
         get_entry.modify_entry(entry_id)
         result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
 
-        return jsonify({"entry":result})
+        return jsonify({
+            "entry":result,
+            "message":"the update was successfully"
+            }), 200
 
 
 
