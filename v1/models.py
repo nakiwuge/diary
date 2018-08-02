@@ -1,5 +1,5 @@
-from flask import jsonify
-from v1 import conn,c,dict_cur
+
+from v1 import conn,c
 
 class CreateTables:
     def __init__(self):
@@ -30,6 +30,11 @@ class CreateTables:
             
         for command in commands:
             self.c.execute(command)
+
+    def delete_tables(self):
+        command = "DROP TABLE entries, users"
+        
+        self.c.execute(command)
 
 class User:
     def __init__(self, email,username, password):
@@ -87,7 +92,7 @@ class Entry:
 
     
 
-
+db=CreateTables()
 
 
 

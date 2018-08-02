@@ -131,7 +131,16 @@ class EntryTestCase(unittest.TestCase):
         )
         self.assertIn(b"wrong password or email", response.data)
 
-    '''def test_for_sucessfull_login(self):
+    def test_for_sucessfull_login(self):
+        self.tester.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "username":"mim" ,
+                "email":"mim@gmail.com",
+                "password":"123", 
+                "confirm password":"123"}),
+            content_type='application/json'
+        )
         response = self.tester.post(
             '/api/v1/auth/login',
             data=json.dumps({"email":"mim@gmail.com", "password":"123"}),
@@ -140,21 +149,54 @@ class EntryTestCase(unittest.TestCase):
         self.assertIn(b"you have been logged in", response.data)
     
     def test_empty_title_field(self):
-       
+        self.tester.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "username":"mim" ,
+                "email":"mim@gmail.com",
+                "password":"123", 
+                "confirm password":"123"}),
+            content_type='application/json'
+        )
+        
+        resp1 = self.tester.post(
+            '/api/v1/auth/login',
+            data=json.dumps({"email":"mim@gmail.com", "password":"123"}),
+            content_type='application/json', 
+        )
+        token=json.loads(resp1.data.decode())["token"]
         response = self.tester.post(
             '/api/v1/entries',
+            headers=dict(Authorization='Bearer '+ token),
             data=json.dumps({"title":"","content":"something"}),
             content_type='application/json' 
         )
         self.assertIn(b"please add title", response.data)
     def test_empty_content_field(self):
+        self.tester.post(
+            '/api/v1/auth/signup',
+            data=json.dumps({
+                "username":"mim" ,
+                "email":"mim@gmail.com",
+                "password":"123", 
+                "confirm password":"123"}),
+            content_type='application/json'
+            )
+    
+        resp1 = self.tester.post(
+            '/api/v1/auth/login',
+            data=json.dumps({"email":"mim@gmail.com", "password":"123"}),
+            content_type='application/json', 
+        )
+        token=json.loads(resp1.data.decode())["token"]
        
         response = self.tester.post(
             '/api/v1/entries',
+            headers= dict(Authorization='Bearer '+ token),
             data=json.dumps({"title":"anything","content":""}),
             content_type='application/json' 
         )
-        self.assertIn(b"please add content", response.data)'''
+        self.assertIn(b"please add content", response.data)
       
 
     def tearDown(self):
