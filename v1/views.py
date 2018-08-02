@@ -5,10 +5,10 @@ from flask import request, jsonify
 from flask_jwt_extended import  (create_access_token, 
 get_jwt_identity, jwt_required)
 from v1 import app,c,conn,jwt
-from v1.models import CreateTables, User, Entry
+from v1.models import User, Entry
 now = datetime.datetime.now()
 
-all_entries=[]
+
 
 @app.route('/api/v1/auth/signup' , methods=['POST'])
 def register():
@@ -74,19 +74,30 @@ def entries():
         elif  'content' not in data or data['content'].strip()=="":
             return jsonify({"message":"please add content"})
         post_entry = Entry(current_user,data['title'], date , data['content'])
-        post_entry.add_entry()
-        return jsonify({"message":"entry has been added successfully"})
+
+        duplicate = Entry(current_user, data['title'], None,None)
+        find_dup = duplicate.check_entry_duplicate()
+        if find_dup:
+            return jsonify({"message":"entry alredy exists"})
+
+        result=post_entry.add_entry()
+        return jsonify({
+            "message":"entry has been added successfully",
+            "entriey":data
+            })
 
     else:
+        all_entries=[]
         current_user = get_jwt_identity()
         if not current_user:
             return jsonify({'message':'please login'})
         get_entry=Entry(current_user,None,None,None)
         result = get_entry.get_all_entries()
-        print(result)
+        if not result:
+            return jsonify({"message":"there are no entries please add an entry"})
         for entry in result:
             entries={}
-            entries['id'] = entry[1]
+            entries['Entry id'] = entry[1]
             entries['date'] = entry[3]
             entries['title']=entry[2]
             entries['content']=entry[4]
@@ -96,12 +107,20 @@ def entries():
 @app.route("/api/v1/entries/<int:entry_id>", methods=['GET', 'PUT'])
 @jwt_required
 def modify(entry_id):
+    all_entries = []
     current_user = get_jwt_identity()
     if request.method == 'GET':
-        if not current_user:
-            return jsonify({'message':'please login'})
-        get_entry=Entry.get_entry_by_id(entry_id)
-        return jsonify({"entry":get_entry})
+        get_entry=Entry(current_user,None,None,None)
+        result=get_entry.get_entry_by_id(entry_id)
+        if not result or type(entry_id) != int:
+             return jsonify({"message":"there are no entries with the provided id"})
+        entries={}
+        entries['Entry id'] = result[1]
+        entries['date'] = result[3]
+        entries['title']=result[2]
+        entries['content']=result[4]
+        all_entries.append(entries) 
+        return jsonify({"entry":all_entries})
 
     else:
         data=request.get_json()
@@ -111,7 +130,7 @@ def modify(entry_id):
             return jsonify({"message":"please add content"})
         get_entry=Entry(None,data['title'], None, data['content'])
         get_entry.modify_entry(entry_id)
-        result = Entry.get_entry_by_id(entry_id)
+        result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
 
         return jsonify({"entry":result})
 

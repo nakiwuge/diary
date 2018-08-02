@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_jwt_extended import  JWTManager
-import psycopg2 
-import psycopg2.extras
+import psycopg2
 
 
 
@@ -16,7 +15,9 @@ conn = psycopg2.connect(
     dbname="mydiary",
     )
 
-c =conn.cursor()
-dict_cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+c = conn.cursor()
+
+
+
 
 from v1 import views

@@ -1,7 +1,7 @@
 
 from v1 import conn,c
 
-class CreateTables:
+class Database:
     def __init__(self):
         self.c=c
         self.conn=conn
@@ -46,7 +46,6 @@ class User:
         command = '''INSERT INTO users (email, username, password)
         VALUES (%s, %s, %s)
         '''
-       
         c.execute(command, (self.email, self.username, self.password))
     def check_duplicate(self):
         command = "SELECT email FROM users where email = %s"
@@ -77,10 +76,10 @@ class Entry:
         c.execute(command,(self.email,))
         value=c.fetchall()
         return value
-    @staticmethod   
-    def get_entry_by_id(entry_id):
-        command = "SELECT * FROM entries WHERE entry_id = %s "
-        c.execute(command,(entry_id,))
+    
+    def get_entry_by_id(self,entry_id):
+        command = "SELECT * FROM entries WHERE entry_id = %s and email = %s "
+        c.execute(command,(entry_id,self.email))
         value = c.fetchone()
         return value
         
@@ -89,10 +88,14 @@ class Entry:
         command = "UPDATE entries SET title = %s , content = %s WHERE entry_id = %s  "
         c.execute(command, (self.title, self.content, entry_id))
         
-
+    def check_entry_duplicate(self):
+        command = "SELECT title FROM entries where email = %s"
+        c.execute(command,(self.email,))
+        value = c.fetchone()
+        return value
     
 
-db=CreateTables()
+db=Database()
 
 
 
