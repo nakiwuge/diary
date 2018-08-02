@@ -4,11 +4,12 @@ from v1 import app
 from v1.models import db
 
 
-class EntryTestCase(unittest.TestCase):
+class TestingCase(unittest.TestCase):
+    ''' Method to run at the begining of each test '''
     def setUp(self):
         self.tester = app.test_client(self)
         db.create_table() 
-
+    ''' user authentication tests'''
     def test_valid_user_registration(self):
         response = self.tester.post(
             '/api/v1/auth/signup',
@@ -72,7 +73,7 @@ class EntryTestCase(unittest.TestCase):
         )
         self.assertIn(b"please add username", response.data)
     
-    def test_ivalid_email_field(self):
+    def test_invalid_email_field(self):
         response = self.tester.post(
             '/api/v1/auth/signup',
             data=json.dumps({
@@ -156,7 +157,7 @@ class EntryTestCase(unittest.TestCase):
             content_type='application/json'
         )
         self.assertIn(b"you have been logged in", response.data)
-    
+    ''' tests for creating and getting entries'''
     def test_empty_title_field(self):
         self.tester.post(
             '/api/v1/auth/signup',
@@ -302,7 +303,8 @@ class EntryTestCase(unittest.TestCase):
             content_type='application/json' 
         )
         self.assertEqual(response.status_code, 200)
-    def test_for_succefull_update(self):
+    ''' tests for modifying entries'''
+    def test_for_successfull_update(self):
         self.tester.post(
             '/api/v1/auth/signup',
             data=json.dumps({
@@ -346,7 +348,7 @@ class EntryTestCase(unittest.TestCase):
         self.assertIn(b"the update was successfully", response.data)
       
       
-
+    ''' method to clear the database'''
     def tearDown(self):
         db.delete_tables()
 
