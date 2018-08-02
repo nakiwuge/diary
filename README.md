@@ -4,6 +4,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/zellymiriam/diary/badge.svg?branch=master)](https://coveralls.io/github/zellymiriam/diary?branch=master)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/465c8859d4b15efa58b8/maintainability)](https://codeclimate.com/github/zellymiriam/diary/maintainability)
+
 - Diary is an online journal where users can pen down their thoughts and feelings.
 
 #Getting Started
