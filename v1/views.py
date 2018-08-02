@@ -16,17 +16,17 @@ def register():
 
         data =request.get_json()
         if  'password' not in data or data['password'].strip()=="":
-            return jsonify({"message":"please password"})
+            return jsonify({"message":"please add password"})
         elif  'confirm password' not in data or data['confirm password'].strip()=="":
             return jsonify({"message":"please add confirm password"})
         elif data['password']!=data['confirm password']:
-            return jsonify("The passwords donot match, please try again")
+            return jsonify({"message":"The passwords donot match, please try again"})
         elif  'username' not in data or data['username'].strip()=="":
-            return jsonify("please add username")
+            return jsonify({"message":"please add username"})
         elif  'email' not in data:
-            return jsonify("please add email")   
+            return jsonify({"message":"please add email"})   
         elif not re.match("[^t]+@[^t]+\.[^t]+", data['email']):
-            return jsonify("please fill in a valid email adress")
+            return jsonify({"message":"please fill in a valid email adress"})
         
         user = User(
             data['email'], 
@@ -40,7 +40,7 @@ def register():
             return jsonify({"message":"the email adress provided is already used"})
 
         user.add_user()
-        return jsonify({"message":"the registration was successful"})
+        return jsonify({"message":"the registration was successful"}),200
 
 @app.route('/api/v1/auth/login' , methods=['POST'])
 def login():
@@ -56,8 +56,11 @@ def login():
     if  not result:
         return jsonify({"message":"wrong password or email"})
     token = create_access_token(identity=result[0])
-    return jsonify(token=token)
-    #return jsonify("you have been logged in")
+    return jsonify({
+        "token":token,
+        "message":"you have been logged in"
+    })
+    
 
 @app.route("/api/v1/entries", methods=['GET','POST'])   
 @jwt_required
