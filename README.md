@@ -12,19 +12,19 @@
 
 1. Clone the repository to your computer with 
 "git clone  https://github.com/zellymiriam/diary"
-
-
+2. run run.py to start your server
 #Prerequisites
 
-1. Install python 3
-2. Install and create a virtual environment
-3. Run the run.py file to start your local server
+- run pip install -r requirements.txt to install all dependecies
 
+#Running the tests
 
+- To run the test run "nosetests -v" in a command line interface
 
-
+# Api documentation
+- https://diary12.docs.apiary.io/#
 #Authors
 
-- Miriam Nakiwuge 
+- Miriam Nakiwuge
 
 
