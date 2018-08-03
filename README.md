@@ -13,6 +13,7 @@
 1. Clone the repository to your computer with 
 "git clone  https://github.com/zellymiriam/diary"
 2. run run.py to start your server
+
 #Prerequisites
 
 - run pip install -r requirements.txt to install all dependecies
@@ -23,6 +24,7 @@
 
 # Api documentation
 - https://diary12.docs.apiary.io/#
+
 #Authors
 
 - Miriam Nakiwuge
