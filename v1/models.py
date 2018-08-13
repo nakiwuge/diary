@@ -1,10 +1,12 @@
 
-from v1 import conn,c
+from v1 import c
+from v1.config import Config
+
 '''creating tables'''
 class Database:
     def __init__(self):
         self.c = c
-        self.conn = conn
+        self.conn = Config.conn
         self.conn.autocommit = True
     def create_table(self):
         commands=(
