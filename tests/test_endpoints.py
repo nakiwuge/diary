@@ -1,7 +1,7 @@
 import unittest
 import json
 from v1 import app
-from tests.test_models import db
+from v1.models import db
 
 class FlaskTestCase(unittest.TestCase):
 
