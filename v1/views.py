@@ -4,7 +4,7 @@ import datetime
 from flask import request, jsonify
 from flask_jwt_extended import  (create_access_token, 
 get_jwt_identity, jwt_required)
-from v1 import app,c,jwt
+from v1 import app,jwt
 from v1.models import User, Entry
 now = datetime.datetime.now()
 
