@@ -1,6 +1,5 @@
 import unittest
 import json
-from flask_testing import TestCase
 from v1 import app
 from tests.test_models import db
 
