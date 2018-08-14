@@ -1,13 +1,13 @@
 language: python
 python:
   - "3.5.2"
-  
 
 install: 
   - pip install -r requirements.txt
 
 services:
-  - postgresql
+  - postgresq
+
 before_script:
   - psql -c 'create database mydiary;' -U postgres
 

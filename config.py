@@ -17,5 +17,6 @@ class Testing:
         password=os.environ.get('PASSWORD'),
         dbname=os.environ.get('TESTDB')
         )
+        
 
  
