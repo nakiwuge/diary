@@ -6,8 +6,6 @@ install:
   - pip install -r requirements.txt
 services:
   - postgresq
-env:
-  - env='testing'
 before_script:
   - psql -c 'create database mydiary;' -U postgres
 
