@@ -1,5 +1,5 @@
 import os 
-from config import Testing, 
+from config import Testing
 from v1 import app
 '''creating tables'''
 class Database:
