@@ -5,7 +5,7 @@ python:
 install: 
   - pip install -r requirements.txt
 services:
-  - postgresq
+  - postgresql
 
 before_script:
   - psql -c 'create database mydiary;' -U postgres
