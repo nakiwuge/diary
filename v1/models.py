@@ -1,22 +1,17 @@
 import os 
-from config import Testing
 from v1 import app
 '''creating tables'''
 class Database:
     def __init__(self):
-        env = os.environ.get('env')
-        if env == 'testing':
-            self.conn = Testing.conn
-            
-        else:
-            self.conn = psycopg2.connect(
-                host='ec2-54-235-160-57.compute-1.amazonaws.com',
-                user='dejkpzjbrysvkp',
-                password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
-                dbname='df3terog2vbq3c',
-                port='5432',
-                uri='postgres://dejkpzjbrysvkp:e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403@ec2-54-235-160-57.compute-1.amazonaws.com:5432/df3terog2vbq3c'
-        )
+      
+        self.conn = psycopg2.connect(
+            host='ec2-54-235-160-57.compute-1.amazonaws.com',
+            user='dejkpzjbrysvkp',
+            password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
+            dbname='df3terog2vbq3c',
+            port='5432',
+            uri='postgres://dejkpzjbrysvkp:e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403@ec2-54-235-160-57.compute-1.amazonaws.com:5432/df3terog2vbq3c'
+    )
         self.conn.autocommit = True
         self.c = self.conn.cursor()
     def create_table(self):
@@ -52,19 +47,15 @@ class Database:
 ''' methods for the user class'''
 class User:
     def __init__(self, email,username, password):
-        env = os.environ.get('env')
-        if env == 'testing':
-            self.conn = Testing.conn
-            
-        else:
-            self.conn = psycopg2.connect(
-                host='ec2-54-235-160-57.compute-1.amazonaws.com',
-                user='dejkpzjbrysvkp',
-                password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
-                dbname='df3terog2vbq3c',
-                port='5432',
-                uri='postgres://dejkpzjbrysvkp:e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403@ec2-54-235-160-57.compute-1.amazonaws.com:5432/df3terog2vbq3c'
-        )
+     
+        self.conn = psycopg2.connect(
+            host='ec2-54-235-160-57.compute-1.amazonaws.com',
+            user='dejkpzjbrysvkp',
+            password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
+            dbname='df3terog2vbq3c',
+            port='5432',
+            uri='postgres://dejkpzjbrysvkp:e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403@ec2-54-235-160-57.compute-1.amazonaws.com:5432/df3terog2vbq3c'
+    )
         self.conn.autocommit = True
         self.c = self.conn.cursor()
         self.username=username
@@ -91,19 +82,15 @@ class User:
 '''methods for the entry class'''        
 class Entry:
     def __init__(self,email, title,date,content):
-        env = os.environ.get('env')
-        if env == 'testing':
-            self.conn = Testing.conn
-            
-        else:
-            self.conn = psycopg2.connect(
-                host='ec2-54-235-160-57.compute-1.amazonaws.com',
-                user='dejkpzjbrysvkp',
-                password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
-                dbname='df3terog2vbq3c',
-                port='5432',
-                uri='postgres://dejkpzjbrysvkp:e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403@ec2-54-235-160-57.compute-1.amazonaws.com:5432/df3terog2vbq3c'
-        )
+        
+        self.conn = psycopg2.connect(
+            host='ec2-54-235-160-57.compute-1.amazonaws.com',
+            user='dejkpzjbrysvkp',
+            password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
+            dbname='df3terog2vbq3c',
+            port='5432',
+            uri='postgres://dejkpzjbrysvkp:e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403@ec2-54-235-160-57.compute-1.amazonaws.com:5432/df3terog2vbq3c'
+    )
         self.conn.autocommit = True
         self.c = self.conn.cursor()
         self.email = email
