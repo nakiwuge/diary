@@ -45,8 +45,8 @@ class Database:
 ''' methods for the user class'''
 class User:
     def __init__(self, email,username, password):
-        app_env = os.environ.get('app_env')
-        if app_env == 'testing':
+        env = os.environ.get('env')
+        if env == 'testing':
             self.conn = Testing.conn 
         else:
             self.conn = Develop.conn
@@ -76,8 +76,8 @@ class User:
 '''methods for the entry class'''        
 class Entry:
     def __init__(self,email, title,date,content):
-        app_env = os.environ.get('app_env')
-        if app_env == 'testing':
+        env = os.environ.get('env')
+        if env == 'testing':
             self.conn = Testing.conn 
         else:
             self.conn = Develop.conn
