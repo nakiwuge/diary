@@ -1,4 +1,4 @@
-import os 
+import psycopg2
 from v1 import app
 '''creating tables'''
 class Database:
