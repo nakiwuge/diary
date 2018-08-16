@@ -1,0 +1,159 @@
+body {margin:0;
+    background-color: rgb(211, 205, 205);
+    position: relative;
+    padding-bottom: 9rem;
+    background-image: url("../images/bg.jpg")
+    
+}
+.container{
+    margin-top: 3%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-radius: 5px;
+    
+    padding: 20px;
+    
+   
+}
+input{
+    display:block;
+    width: 60%;
+}
+input[type=text],textarea {
+    display:block;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+button[type=submit] {
+    background-color:#4286f4;
+    color:rgb(239, 239, 243);
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.button-small[type=submit]{
+    padding: 5px 20px;
+}
+button[type=submit]:hover {
+    background-color:#4168f4;
+}
+.button-danger[type=submit]{
+    padding: 5px 20px;
+    background-color:red;
+}
+input[type=password] {
+    display:block;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+input[type=email] {
+    display:block;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+
+form {
+    margin-left: auto;
+    margin-right:auto;
+    width: 60%;
+}
+.topnav{
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+	align-items: center;
+}
+.topnav-right{
+    margin-left: auto;  
+
+}
+.topnav a {
+    float:left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  
+  }
+.topnav a:hover {
+    background: #ddd;
+    color: black;
+  }
+.nohover a:hover {
+    background:transparent;
+    color: rgb(22, 98, 121);
+}
+
+a{
+    text-decoration: none;  
+}
+.text{
+    display: inline;
+
+}
+
+.entries {
+    margin-top: 5%;
+    margin-left: 25%;
+    margin-right:25%;
+    width: 50%;
+    
+  
+}
+
+
+
+table {
+    margin-top: 5%;
+    margin-left: 25%;
+    margin-right:25%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+    
+
+}
+table a{
+    display: block;
+    align-items: center;
+    color :rgb(37, 36, 36);
+}
+table a:hover {
+    background: transparent;
+    color: rgb(55, 99, 194);
+  }
+
+
+td, th {
+    border: 0px;
+    text-align: left;
+    padding: 8px;
+}
+#welcome_text{
+    color:rgb(3, 49, 49); 
+    background-color:rgba(233, 233, 233, 0.377);
+    text-align: center;
+    font-family:Courier;
+
+
+}
+.info-text{
+   color:rgba(34, 34, 199, 0.664);
+}
+#signup-bg{
+    background-color:rgba(233, 233, 233, 0.377);
+}
+textarea{
+    height:200px;
+
+}

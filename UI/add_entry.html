@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Add Entry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+</head>
+<body >
+    <div class="topnav">
+        <div class="nohover">
+            <a href="home.html"><h2 >My Diary</h2></a>
+        </div>
+        <a href="home.html">Home</a>
+        <a href="add_entry.html">Add Entry</a>
+        <div class="topnav-right">
+            <a href="profile.html">Profile</a>
+            <a href="index.html">Logout</a>
+            
+        </div>
+    </div>
+    <div class="container">
+         <form >  
+            <h1>Add Entry</h1>
+            <hr>
+            <label for="title"><b>Title</b></label>
+            <input type="text" placeholder="Enter Title" name="title" >
+            <p id="date"></p>
+            <label for="content">Content</label>
+            <textarea  name="content" placeholder="Write something.." ></textarea>
+            <hr>   
+        </form>
+        <form action="home.html">
+            <button type="submit" >Save</button>    
+        </form>  
+    </div>   
+</body>
+    <script src="js/main.js"></script>
+</html>
