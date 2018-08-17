@@ -24,9 +24,19 @@ function signUp(e){
         })
     })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+            console.log(data)
+            if (data['message'] == "the registration was successful"){
+
+               window.location = './index.html'  
+            }
+            else{
+                document.getElementById('error').innerHTML = data['message']
+          
+            }
+            
+        })
         .catch((err) => console.log(err))
 }
-        
-    
+
 document.getElementById('signup').addEventListener('submit', signUp)
