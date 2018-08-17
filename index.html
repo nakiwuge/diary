@@ -10,19 +10,20 @@
 </head>
 <body>
 
-    <div class="container ">
+    <div id="login" class="container ">
          <form > 
             <h1 id='welcome_text'>Welcome to My Diary</h1> 
             
             <h3>Please login with your account details</h3>
+            <p  class="error" id="login_error"><p>
             <hr>
             <label for="email"><b>Email</b></label>
-            <input type="email" placeholder="Enter Email" name="email" required>
+            <input  type="email" id="login_email" placeholder="Enter Email" name="email" required>
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <input type="password"id="login_password" placeholder="Enter Password" name="psw" required>
             <hr>   
         </form>
-        <form action="home.html">
+        <form >
             <button type="submit">Login</button>
             <a href="#forgot_password.html">Forgot password?</a>
             <div>
@@ -34,5 +35,5 @@
        
    </div>   
 </body>
-<script src="js/auth.js"></script>
+<script src="js/login.js"></script>
 </html>

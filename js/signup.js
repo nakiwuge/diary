@@ -1,19 +1,20 @@
 "use strict"
 const signupurl = 'https://diarydeploy.herokuapp.com/api/v1/auth/signup'
 
+document.getElementById('signup').addEventListener('submit', signUp)
+
 //signup function
 function signUp(e){
-    e.preventDefault();
+    e.preventDefault()
 
-    let username = document.getElementById('username').value
-    let email = document.getElementById('email').value
-    let password = document.getElementById('password').value
-    let confirm_password = document.getElementById('confirm_password').value
+    let username = document.getElementById('signup_username').value
+    let email = document.getElementById('signup_email').value
+    let password = document.getElementById('signup_password').value
+    let confirm_password = document.getElementById('signup_confirm_password').value
 
     fetch(signupurl, {
         method: 'POST',
         headers: {
-            'Accept':'application/json, text/plain, */*',
             'Content-type':'application/json'
         },
         body:JSON.stringify({
@@ -31,7 +32,7 @@ function signUp(e){
                window.location = './index.html'  
             }
             else{
-                document.getElementById('error').innerHTML = data['message']
+                document.getElementById('signup_error').innerHTML = data['message']
           
             }
             
@@ -39,4 +40,5 @@ function signUp(e){
         .catch((err) => console.log(err))
 }
 
-document.getElementById('signup').addEventListener('submit', signUp)
+
+
