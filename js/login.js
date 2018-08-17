@@ -25,6 +25,7 @@ function Login(e){
             console.log(data)
             if (data['message']=="you have been logged in"){
                 window.location = './home.html'
+                localStorage.setItem('token', data['token']) 
             }
             else{
                 document.getElementById('login_error').innerHTML = data['message']
