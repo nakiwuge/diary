@@ -16,9 +16,9 @@ def register():
     ''' validating signup fields'''
     if  'password' not in data or data['password'].strip()=="":
         return jsonify({"message":"please add password"})
-    elif  'confirmpassword' not in data or data['confirmpassword'].strip()=="":
+    elif  'confirm_password' not in data or data['confirm_password'].strip()=="":
         return jsonify({"message":"please add confirm password"})
-    elif data['password']!=data['confirmpassword']:
+    elif data['password']!=data['confirm_password']:
         return jsonify({"message":"The passwords donot match, please try again"})
     elif  'username' not in data or data['username'].strip()=="":
         return jsonify({"message":"please add username"})
