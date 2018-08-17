@@ -8,7 +8,7 @@ function signUp(e){
     let username = document.getElementById('username').value
     let email = document.getElementById('email').value
     let password = document.getElementById('password').value
-    let confirmpassword = document.getElementById('confirmpassword').value
+    let confirm_password = document.getElementById('confirm_password').value
 
     fetch(signupurl, {
         method: 'POST',
@@ -20,7 +20,7 @@ function signUp(e){
             username:username,
             email:email,
             password:password,
-            confirmpassword:confirmpassword
+            confirm_password:confirm_password
         })
     })
         .then((res) => res.json())
