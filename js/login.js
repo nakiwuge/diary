@@ -1,14 +1,14 @@
 "use strict"
-const loginurl = 'https://diarydeploy.herokuapp.com/api/v1/auth/login'
+const loginurl = "https://diarydeploy.herokuapp.com/api/v1/auth/login"
 
-document.getElementById('login').addEventListener('submit', Login)
+document.getElementById("login").addEventListener("submit", login)
 //login function
 
-function Login(e){
+function login(e){
     e.preventDefault()
 
-    let email = document.getElementById('login_email').value
-    let password = document.getElementById('login_password').value
+    let email = document.getElementById("login_email").value
+    let password = document.getElementById("login_password").value
 
     fetch(loginurl, {
         method: 'POST',
@@ -23,7 +23,7 @@ function Login(e){
         .then((res)=>res.json())
         .then((data)=>{
             console.log(data)
-            if (data['message']=="you have been logged in"){
+            if (data["message"]=="you have been logged in"){
                 window.location = './home.html'
                 localStorage.setItem('token', data['token']) 
             }

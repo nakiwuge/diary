@@ -20,21 +20,22 @@
             
         </div>
     </div>
-    <div class="container">
+    <div id = "add_entry" class="container">
          <form >  
             <h1>Add Entry</h1>
+            <p  class="error" id="add_entry_error"><p></p>
             <hr>
             <label for="title"><b>Title</b></label>
-            <input type="text" placeholder="Enter Title" name="title" >
+            <input type="text" id="add_title" placeholder="Enter Title" name="title" >
             <p id="date"></p>
             <label for="content">Content</label>
-            <textarea  name="content" placeholder="Write something.." ></textarea>
+            <textarea id="add_content" name="content" placeholder="Write something.." ></textarea>
             <hr>   
         </form>
-        <form action="home.html">
+        <form >
             <button type="submit" >Save</button>    
         </form>  
     </div>   
 </body>
-    <script src="js/main.js"></script>
+    <script src="js/add_entry.js"></script>
 </html>
