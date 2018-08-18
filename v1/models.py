@@ -23,11 +23,11 @@ class Database:
                 password VARCHAR(100)
             )''',
             ''' CREATE TABLE IF NOT EXISTS entries(
-                    email VARCHAR(50),
+                    email VARCHAR(100),
                     entry_id SERIAL PRIMARY KEY,
                     title VARCHAR(100),
                     date VARCHAR(50),
-                    content VARCHAR(5000000),
+                    content VARCHAR,
                     FOREIGN KEY (email)
                     REFERENCES users (email)
                     ON UPDATE CASCADE ON DELETE CASCADE
