@@ -111,7 +111,7 @@ def entries():
         ''' add keys to returned data '''
         for entry in result:
             entries={}
-            entries['Entry id'] = entry[1]
+            entries['Entry_id'] = entry[1]
             entries['date'] = entry[3]
             entries['title']=entry[2]
             entries['content']=entry[4]
