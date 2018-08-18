@@ -8,30 +8,42 @@ function addEntry(e){
 
     let title = document.getElementById("add_title").value
     let content = document.getElementById("add_content").value
+    let token = localStorage.getItem("token")
 
-    fetch(url, {
-        method:"POST",
-        headers:{
-            "content-type":"application/json",
-            "Authorization":"Bearer "+localStorage.getItem("token")
-        },
-        body:JSON.stringify({
-            title:title,
-            content:content
+    if (token){
+
+        fetch(url, {
+            method:"POST",
+            headers:{
+                "content-type":"application/json",
+                "Authorization":"Bearer "+token
+            },
+            body:JSON.stringify({
+                title:title,
+                content:content
+            })
+
         })
-
-    })
-    .then((res)=>res.json())
-    .then((data)=>{
-        console.log(data)
-        if (data["message"]=="entry has been added successfully"){
-            alert("The entry has been added")
-            window.location = "./home.html"
+        .then((res)=>res.json())
+        .then((data)=>{
+            console.log(data)
+            if (data["msg"]=="Token has expired"){
+                window.location = "./index.html"
+            }
+            else{
+                if (data["message"]=="entry has been added successfully"){
+                    alert("The entry has been added")
+                    window.location = "./home.html"
+                }
+                else{
+                    document.getElementById('add_entry_error').innerHTML = data["message"]
+                }
         }
-        else{
-            document.getElementById('add_entry_error').innerHTML = data["message"]
-        }
-        
+            
 
-    })
+        })
+    }
+    else{
+        window.location.replace("./index.html")
+    }
 }
