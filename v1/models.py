@@ -27,7 +27,7 @@ class Database:
                     entry_id SERIAL PRIMARY KEY,
                     title VARCHAR(100),
                     date VARCHAR(50),
-                    content TEXT,
+                    content VARCHAR,
                     FOREIGN KEY (email)
                     REFERENCES users (email)
                     ON UPDATE CASCADE ON DELETE CASCADE
