@@ -2,8 +2,8 @@
 const loginurl = "https://diarydeploy.herokuapp.com/api/v1/auth/login"
 
 document.getElementById("login").addEventListener("submit", login)
-//login function
 
+//login function
 function login(e){
     e.preventDefault()
 
@@ -31,6 +31,5 @@ function login(e){
                 document.getElementById('login_error').innerHTML = data['message']
             }
         })
-    
 }
 
