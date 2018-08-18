@@ -18,16 +18,16 @@ class Database:
         commands=(
          
             '''CREATE TABLE IF NOT EXISTS users(
-                email VARCHAR(50) PRIMARY KEY NOT NULL UNIQUE,
+                email VARCHAR(100) PRIMARY KEY NOT NULL UNIQUE,
                 username       VARCHAR(50),
-                password VARCHAR(50)
+                password VARCHAR(100)
             )''',
             ''' CREATE TABLE IF NOT EXISTS entries(
                     email VARCHAR(50),
                     entry_id SERIAL PRIMARY KEY,
-                    title VARCHAR(50),
+                    title VARCHAR(100),
                     date VARCHAR(50),
-                    content VARCHAR(50),
+                    content TEXT,
                     FOREIGN KEY (email)
                     REFERENCES users (email)
                     ON UPDATE CASCADE ON DELETE CASCADE
