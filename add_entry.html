@@ -6,6 +6,8 @@
     <title>Add Entry</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    
+  
 </head>
 <body >
     <div class="topnav">
@@ -16,11 +18,11 @@
         <a href="add_entry.html">Add Entry</a>
         <div class="topnav-right">
             <a href="profile.html">Profile</a>
-            <a href="index.html">Logout</a>
+            <a Onclick="emptyLocalStorage()" href="index.html">Logout</a>
             
         </div>
     </div>
-    <div id = "add_entry" class="container">
+    <div id ="add_entry" class="container">
          <form >  
             <h1>Add Entry</h1>
             <p  class="error" id="add_entry_error"><p></p>
@@ -37,5 +39,7 @@
         </form>  
     </div>   
 </body>
-    <script src="js/add_entry.js"></script>
+<script src="js/add_entry.js"></script>
+<script src="js/main.js"></script>
+    
 </html>

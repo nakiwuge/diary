@@ -38,12 +38,10 @@ function addEntry(e){
                 else{
                     document.getElementById('add_entry_error').innerHTML = data["message"]
                 }
-        }
-            
-
+        }   
         })
     }
     else{
-        window.location.replace("./index.html")
+        window.location = "./index.html"
     }
 }

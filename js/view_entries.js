@@ -1,36 +1,41 @@
 "use strict"
 const url = 'https://diarydeploy.herokuapp.com/api/v1/entries'
 
-function viewEntries(){
-    let token = localStorage.getItem("token")
-  
-    if (token){
-        fetch(url,{
-            method: "GET",
-            headers: {
-                "content-type": "application/json",
-                "Authorization": "Bearer "+token
-            }
+let token = localStorage.getItem("token")
 
-        })
+let options = {
+    method: "GET",
+    headers: {
+        "content-type": "application/json",
+        "Authorization": "Bearer "+token
+    }}
+
+function getEntry(n){
+    
+    localStorage.setItem("id", n)
+}
+
+function viewEntries(){
+
+    if (token){
+        fetch(url, options)
         .then((res) => res.json())
         .then((data) => {
             if (data["msg"]=="Token has expired"){
                 window.location = "./index.html"
             }
             else{
-                console.log(data)
                 let entries=data["entries"]
                 if (entries){
+                    document.getElementById("myEntries").innerHTML = "My Entries"
                     entries.forEach(entry => {
-                        let get_id = localStorage.setItem("id",entry.entry_id)
+                        let id = entry.Entry_id
                         document.getElementById("view_id").innerHTML += `   
-                            <tr>
-                                <td ><a onClick=${get_id} href="view_content.html">${entry.title}</a></td>
+                                <td ><a onClick="getEntry('${id}')" href="view_content.html">${entry.title}</a></td>
                                 <td >${entry.date}</td>
                                 <td>
                                     <form action="view_content.html">
-                                        <button class ="button-small"type="submit" >view</button>
+                                        <button onClick="getEntry('${id}')" class ="button-small"type="submit" >view</button>
                                     </form>
                                 </td>
                                 <td>
@@ -39,10 +44,8 @@ function viewEntries(){
                                     </form>
                                 </td>
                             <tr>
-                    `
-                        
+                    ` 
                     })
-                   
                 }
                 else{
                     document.getElementById('no_entry').innerHTML = `
@@ -52,41 +55,53 @@ function viewEntries(){
             }
         })
     }
+    else{
+        window.location = "./index.html"
+    }
 }
 
 function viewContent(){
-    let token = localStorage.getItem("token")
+    
+    let get_id = localStorage.getItem("id")
   
-    if (token){
-        fetch(url,{
-            method: "GET",
-            headers: {
-                "content-type": "application/json",
-                "Authorization": "Bearer "+token
-            }
+    if (get_id){
+        if(!token){
+            window.location = "./index.html"
 
-        })
+        }
+        fetch(url+"/"+get_id, options)
         .then((res) => res.json())
         .then((data) => {
             if (data["msg"]=="Token has expired"){
                 window.location = "./index.html"
             }
             else{
-                console.log(data)
-                let entries=data["entries"]
-                if (entries){
-                    
-                    document.getElementById("view_title").innerHTML = entries
-                        
-                   
-                   
+                let entry=data["entry"][0]
+                if (entry){
+                    document.getElementById("content_id").innerHTML = `
+                        <h2 >${entry.title} </h2>
+                        <div>
+                            <p >${entry.date}</p> 
+                            <p>${entry.content}</p>  
+                            <form class="text" action="edit_content.html">
+                                <button style="padding: 5px 20px;"type="submit" >edit</button>
+                            </form>
+                            <form class="text"action="#">
+                                <button  class="button-danger" " type="submit" >delete</button>
+                            </form>    
+                        </div>  
+                    `   
+                }else{
+                    window.location = "./404.html" 
                 }
-                else{
-                    document.getElementById('no_entry').innerHTML = `
-                    You have no entries. Please click Add entry to add an entry.
-                    `
-                }
+              
             }
         })
     }
+    else{
+        window.location = "./404.html" 
+                
+    }
 }
+
+
