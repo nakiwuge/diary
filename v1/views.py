@@ -146,20 +146,18 @@ def modify(entry_id):
         result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
         exp_date = result.date + timedelta(hours=24)
         now = datetime.now()
-
+        print (now)
+        print (exp_date)
         if now > exp_date:
             return jsonify({"message":"Sorry this entry cannot be edited. It is past 24 hours."})
-
-        ''' validate modify entry fields'''
-        elif  'title' not in data or data['title'].strip()=="":
+        elif  'title' not in data or data['title'].strip() == "":
             return jsonify({"message":"please add title"})
-        elif  'content' not in data or data['content'].strip()=="":
+        elif  'content' not in data or data['content'].strip() == "":
             return jsonify({"message":"please add content"})
         get_entry=Entry(None,data['title'], None, data['content']) 
         ''' modify entry'''
         get_entry.modify_entry(entry_id)
-        result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
-
+        
         return jsonify({
             "entry":result,
             "message":"the update was successfully"
