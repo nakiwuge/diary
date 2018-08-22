@@ -151,7 +151,7 @@ def modify(entry_id):
             return jsonify({"message":"Sorry this entry cannot be edited. It is past 24 hours."})
 
         ''' validate modify entry fields'''
-        if  'title' not in data or data['title'].strip()=="":
+        elif  'title' not in data or data['title'].strip()=="":
             return jsonify({"message":"please add title"})
         elif  'content' not in data or data['content'].strip()=="":
             return jsonify({"message":"please add content"})
