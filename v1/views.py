@@ -1,12 +1,12 @@
 import re
 import psycopg2
-import datetime
+from datetime import datetime ,timedelta
 from flask import request, jsonify
 from flask_jwt_extended import  (create_access_token, 
 get_jwt_identity, jwt_required)
 from v1 import app,jwt
 from v1.models import User, Entry
-now = datetime.datetime.now()
+
 
 ''' signup endpoint '''
 @app.route('/api/v1/auth/signup' , methods=['POST'])
@@ -70,7 +70,8 @@ def login():
 @jwt_required
 def entries():
     ''' setting the date to current date'''
-    date = now.strftime('%d-%m-%y')
+
+    date = datetime.now()
     ''' creating an entry'''
     if request.method == 'POST':
         '''get current user'''
@@ -141,6 +142,14 @@ def modify(entry_id):
     else:
         ''' get modified data from user with json file '''
         data=request.get_json()
+        
+        result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
+        exp_date = result.date + timedelta(hours=24)
+        now = datetime.now()
+
+        if now > exp_date:
+            return jsonify({"message":"Sorry this entry cannot be edited. It is past 24 hours."})
+
         ''' validate modify entry fields'''
         if  'title' not in data or data['title'].strip()=="":
             return jsonify({"message":"please add title"})
