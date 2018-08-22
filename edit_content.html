@@ -6,6 +6,7 @@
     <title>content</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    
 </head>
 <body >
     <div class="topnav">
@@ -20,25 +21,27 @@
             
         </div>
     </div>
-    <div class="container">
+    <div id = "edit_entry" class="container">
          <form >  
             <hr>
             <label for="title"><b>Title</b></label>
-            <input type="text" placeholder="Enter Title" name="title" value="Applying for Andela fellowship">
-            <p>20-may-2018</p>
+            <input id = "editTitle"type="text" placeholder="Enter Title" name="title" >
+            <p id="editDate"></p>
             <label for="content">Content</label>
-            <textarea  name="content" >Today I have applied for  Andela fellowship. I pray that am considered because I really what to start a career in software development. I believe in myself. I know i will make it into andela. Fingures crossed!
-            </textarea>
+            <textarea  id = "editContent" name="content" ></textarea>
             <hr>   
         </form>
-        <form action="home.html">
+        <form action="#">
             <button type="submit" >Save</button>    
         </form>  
-        <form action="home.html">
+        <form action="#">
             <button type="submit" class="button-danger" >cancel</button>    
         </form>  
        
     </div>   
 </body>
-    <script src="js/main.js"></script>
+<script src="js/edit_entry.js"></script>
+<script src="js/main.js"></script>
+
+  
 </html>

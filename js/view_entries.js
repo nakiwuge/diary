@@ -1,8 +1,6 @@
 "use strict"
 const url = 'https://diarydeploy.herokuapp.com/api/v1/entries'
-
 let token = localStorage.getItem("token")
-
 let options = {
     method: "GET",
     headers: {
@@ -13,6 +11,13 @@ let options = {
 function getEntry(n){
     
     localStorage.setItem("id", n)
+}
+
+function storeEntry(x,y,z){
+    
+    localStorage.setItem("title", x)
+    localStorage.setItem("content", y)
+    localStorage.setItem("date", z)
 }
 
 function viewEntries(){
@@ -84,7 +89,7 @@ function viewContent(){
                             <p >${entry.date}</p> 
                             <p>${entry.content}</p>  
                             <form class="text" action="edit_content.html">
-                                <button style="padding: 5px 20px;"type="submit" >edit</button>
+                                <button onClick="storeEntry('${entry.title}','${entry.content}','${entry.date}')"style="padding: 5px 20px;"type="submit" >edit</button>
                             </form>
                             <form class="text"action="#">
                                 <button  class="button-danger" " type="submit" >delete</button>
@@ -103,5 +108,3 @@ function viewContent(){
                 
     }
 }
-
-
