@@ -144,8 +144,8 @@ def modify(entry_id):
         data=request.get_json()
         
         result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
-        print (result.date)
-        exp_date = result.date + timedelta(minutes=1)
+        print (result)
+        exp_date = result[0]['date'] + timedelta(minutes=1)
         now = datetime.now()
         print (now)
         print (exp_date)
