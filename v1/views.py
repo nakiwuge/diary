@@ -148,7 +148,7 @@ def modify(entry_id):
         result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
         ''' get date from database '''
         date = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
-        exp_date =  date + timedelta(minutes=24)
+        exp_date =  date + timedelta(minutes=1)
         
         if now > exp_date:
             return jsonify({"message":"Sorry this entry cannot be edited. It is past 24 hours."})
