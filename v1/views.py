@@ -7,6 +7,7 @@ get_jwt_identity, jwt_required)
 from v1 import app,jwt
 from v1.models import User, Entry
 
+now = datetime.now()
 
 ''' signup endpoint '''
 @app.route('/api/v1/auth/signup' , methods=['POST'])
@@ -59,7 +60,8 @@ def login():
     if  not result:
         return jsonify({"message":"wrong password or email"})
     ''' generating the jwt token'''
-    token = create_access_token(identity=result[0])
+  
+    token = create_access_token(identity=result[0] ,expires_delta=False)
     return jsonify({
         "token":token,
         "message":"you have been logged in"
@@ -70,8 +72,8 @@ def login():
 @jwt_required
 def entries():
     ''' setting the date to current date'''
+    date = now.strftime("%Y-%m-%d %H:%M:%S")
 
-    date = datetime.now()
     ''' creating an entry'''
     if request.method == 'POST':
         '''get current user'''
@@ -88,7 +90,7 @@ def entries():
         '''check if the entry exists'''
         duplicate = Entry(current_user, data['title'], None,None)
         find_dup = duplicate.check_entry_duplicate()
-        print (find_dup)
+       
         for title in find_dup:
             if title[0] == data['title']:
                 return jsonify({"message":"entry alredy exists"})
@@ -144,11 +146,10 @@ def modify(entry_id):
         data=request.get_json()
         
         result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
-        print (result)
-        exp_date = result[0]['date'] + timedelta(minutes=1)
-        now = datetime.now()
-        print (now)
-        print (exp_date)
+        ''' get date from database '''
+        date = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
+        exp_date =  date + timedelta(minutes=24)
+        
         if now > exp_date:
             return jsonify({"message":"Sorry this entry cannot be edited. It is past 24 hours."})
         elif  'title' not in data or data['title'].strip() == "":
