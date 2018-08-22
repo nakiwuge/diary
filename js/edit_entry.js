@@ -36,16 +36,16 @@ function editEntry(){
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
-            if (data["message"] == "Sorry this entry cannot be edited. It is past 24 hours."){
-                alert(data["message"])
-                window.location = "./view_content.html"
-            }
 
-            else if (data["msg"]=="Token has expired"){
+            if (data["msg"]=="Token has expired"){
                 window.location = "./index.html"
             }
             else{
-                if (data["message"]=="the update was successfully"){
+                if (data["message"] == "Sorry this entry cannot be edited. It is past 24 hours."){
+                    alert(data["message"])
+                    window.location = "./view_content.html"
+                }
+                else if (data["message"]=="the update was successfully"){
                     alert("Your entry has been updated!")
                     window.location = "./view_content.html"
                 }
