@@ -46,7 +46,7 @@ function viewEntries(){
                                 </td>
                                 <td>
                                     <form action="#">
-                                        <button class="button-danger"  type="submit" >delete</button>
+                                        <button onClick="deleteEntry()" class="button-danger"  type="submit" >delete</button>
                                     </form>
                                 </td>
                             </tr>
@@ -93,7 +93,7 @@ function viewContent(){
                                 <button onClick="storeEntry('${entry.title}','${entry.content}','${entry.date}')"style="padding: 5px 20px;"type="submit" >edit</button>
                             </form>
                             <form class="text"action="#">
-                                <button  class="button-danger" " type="submit" >delete</button>
+                                <button onClick="deleteEntry()"  class="button-danger" " type="submit" >delete</button>
                             </form>    
                         </div>  
                     `   
@@ -109,6 +109,27 @@ function viewContent(){
                 
     }
 }
+function deleteEntry(){
+    let get_id = localStorage.getItem("id")
+    fetch(url+"/"+get_id, options = {
+        method: "DELETE",
+        headers: {
+            "content-type": "application/json",
+            "Authorization": "Bearer "+token
+        }})
+    .then((res) => res.json())
+    .then((data) => {
+        if (data){
+            console.log(data)
+            alert(data['message'])
+            window.location = "./home.html"
+            }
+        else{
+            console.log("not working") 
+            }
+        })
+}
+
 function viewProfile(){
 
     if (token){

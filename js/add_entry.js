@@ -9,7 +9,7 @@ function addEntry(e){
     let title = document.getElementById("add_title").value
     let content = document.getElementById("add_content").value
     let token = localStorage.getItem("token")
-
+    
     if (token){
 
         fetch(url, {
