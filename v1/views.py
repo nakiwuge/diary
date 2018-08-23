@@ -121,7 +121,7 @@ def entries():
             all_entries.append(entries)  
         return jsonify({"entries":all_entries})
 ''' get entry by id and modify entry by id endpoint'''
-@app.route("/api/v1/entries/<int:entry_id>", methods=['GET', 'PUT'])
+@app.route("/api/v1/entries/<int:entry_id>", methods=['GET', 'PUT','DELETE'])
 @jwt_required
 def modify(entry_id):
     all_entries = []
@@ -141,7 +141,7 @@ def modify(entry_id):
         entries['content']=result[4]
         all_entries.append(entries) 
         return jsonify({"entry":all_entries}),200
-    else:
+    elif request.method == 'GET':
         ''' get modified data from user with json file '''
         data=request.get_json()
         
@@ -163,4 +163,10 @@ def modify(entry_id):
         return jsonify({
             "entry":result,
             "message":"the update was successfully"
+            }), 200
+    else:
+        get_entry=Entry(None,None,None,None)
+        get_entry.delete_entry(entry_id)
+        return jsonify({
+            "message":"The entry has been deleted"
             }), 200

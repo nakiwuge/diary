@@ -14,6 +14,7 @@ class Database:
     )
         self.conn.autocommit = True
         self.c = self.conn.cursor()
+        
     def create_table(self):
         commands=(
          
@@ -45,18 +46,9 @@ class Database:
         self.c.execute(command)
 
 ''' methods for the user class'''
-class User:
+class User(Database):
     def __init__(self, email,username, password):
-     
-        self.conn = psycopg2.connect(
-            host='ec2-54-235-160-57.compute-1.amazonaws.com',
-            user='dejkpzjbrysvkp',
-            password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
-            dbname='df3terog2vbq3c',
-            port='5432' 
-    )
-        self.conn.autocommit = True
-        self.c = self.conn.cursor()
+        Database.__init__(self)
         self.username=username
         self.email=email
         self.password=password
@@ -81,16 +73,7 @@ class User:
 '''methods for the entry class'''        
 class Entry:
     def __init__(self,email, title,date,content):
-        
-        self.conn = psycopg2.connect(
-            host='ec2-54-235-160-57.compute-1.amazonaws.com',
-            user='dejkpzjbrysvkp',
-            password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
-            dbname='df3terog2vbq3c',
-            port='5432'
-    )
-        self.conn.autocommit = True
-        self.c = self.conn.cursor()
+        Database.__init__(self)
         self.email = email
         self.title = title
         self.date = date
@@ -123,7 +106,11 @@ class Entry:
         self.c.execute(command,(self.email,))
         value =self.c.fetchall()
         return value
-    
+    ''' deleting an entry '''
+
+    def delete_entry(self,entry_id):
+        command = "DELETE FROM entries WHERE entry_id = %s"
+        self.c.execute(command,(entry_id,))
 
 db=Database()
 
