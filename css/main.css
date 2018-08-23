@@ -1,20 +1,46 @@
-body {margin:0;
+body {
+    margin:0;
     background-color: rgb(211, 205, 205);
-    position: relative;
+    padding:0;
     padding-bottom: 9rem;
     background-image: url("../images/bg.jpg")
     
 }
 .container{
-    margin-top: 3%;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    border-radius: 5px;
+    margin:auto;
+    width: 80%;
+    overflow: hidden; 
     
-    padding: 20px;
-    
+}
+header{
+    background: #333;
+    min-height: 70x; 
+	
    
+}
+header a{  
+    display:inline;
+    color: #f2f2f2;
+    padding:0 20px 0 20px;
+    font-size: 17px;
+}
+nav{
+    margin-top: 50px;
+}
+.nav-right{
+    float:right;
+}
+#brand-name{
+    float:left;
+    margin:0;
+}
+nav  a:hover {
+    background: #ddd;
+    color: black;
+  }
+.nohover a:hover {
+    background:transparent;
+    color: rgb(22, 98, 121);
 }
 input{
     display:block;
@@ -70,33 +96,7 @@ form {
     margin-right:auto;
     width: 60%;
 }
-.topnav{
-    overflow: hidden;
-    background-color: #333;
-    display: flex;
-	align-items: center;
-}
-.topnav-right{
-    margin-left: auto;  
 
-}
-.topnav a {
-    float:left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  
-  }
-.topnav a:hover {
-    background: #ddd;
-    color: black;
-  }
-.nohover a:hover {
-    background:transparent;
-    color: rgb(22, 98, 121);
-}
 
 a{
     text-decoration: none;  
@@ -105,27 +105,12 @@ a{
     display: inline;
 
 }
-
-.entries {
-    margin-top: 5%;
-    margin-left: 25%;
-    margin-right:25%;
-    width: 50%;
-    
-  
+#table-data{
+    overflow-x: auto;
 }
-
-
-
 table {
-    margin-top: 5%;
-    margin-left: 25%;
-    margin-right:25%;
     font-family: arial, sans-serif;
     border-collapse: collapse;
-    width: 50%;
-    
-
 }
 table a{
     display: block;
@@ -142,6 +127,7 @@ td, th {
     border: 0px;
     text-align: left;
     padding: 8px;
+   
 }
 #welcome_text{
     color:rgb(3, 49, 49); 

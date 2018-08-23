@@ -5,22 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>content</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />  
 </head>
 <body >
-    <div class="topnav">
-        <div class="nohover">
-            <a href="home.html"><h2 >My Diary</h2></a>
-        </div>
-        <a href="home.html">Home</a>
-        <a href="add_entry.html">Add Entry</a>
-        <div class="topnav-right">
-            <a href="profile.html">Profile</a>
-            <a Onclick="emptyLocalStorage()" href="index.html">Logout</a>
-            
-        </div>
-    </div>
+    <header >
+        <div class="container">
+            <div id="brand-name">
+                <a href="home.html"><h2 >My Diary</h2></a>
+            </div>
+            <nav>
+                <a href="home.html">Home</a>
+                <a href="add_entry.html">Add Entry</a>
+                <div class="nav-right">
+                    <a href="profile.html">Profile</a>
+                    <a onClick="emptyLocalStorage()" href="index.html">Logout</a>
+                </div>
+            </nav>   
+        <div>
+    </header>
     <div id = "edit_entry" class="container">
          <form >  
             <hr>
@@ -37,11 +39,8 @@
         <form action="view_content.html">
             <button type="submit" class="button-danger" >cancel</button>    
         </form>  
-       
     </div>   
 </body>
 <script src="js/edit_entry.js"></script>
-<script src="js/main.js"></script>
-
-  
+<script src="js/main.js"></script> 
 </html>

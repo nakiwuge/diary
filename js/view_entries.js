@@ -35,7 +35,8 @@ function viewEntries(){
                     document.getElementById("myEntries").innerHTML = "My Entries"
                     entries.forEach(entry => {
                         let id = entry.Entry_id
-                        document.getElementById("view_id").innerHTML += `   
+                        document.getElementById("view_id").innerHTML += ` 
+                            <tr>  
                                 <td ><a onClick="getEntry('${id}')" href="view_content.html">${entry.title}</a></td>
                                 <td >${entry.date}</td>
                                 <td>
@@ -48,7 +49,7 @@ function viewEntries(){
                                         <button class="button-danger"  type="submit" >delete</button>
                                     </form>
                                 </td>
-                            <tr>
+                            </tr>
                     ` 
                     })
                 }
