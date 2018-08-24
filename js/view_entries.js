@@ -19,6 +19,22 @@ function storeEntry(x,y,z){
     localStorage.setItem("content", y)
     localStorage.setItem("date", z)
 }
+function userDetails(){
+    fetch("https://diarydeploy.herokuapp.com/api/v1/user",options)
+    .then((res) => res.json())
+    .then((data) => {
+        let user = data['user']
+        if (user){
+            document.getElementById("username-id").innerHTML =`
+            <strong>Username: </strong>${user["username"]}`
+            document.getElementById("email-id").innerHTML =`
+            <strong>Username: </strong>${user["email"]}`
+        }
+        
+    })
+    
+
+}
 
 function viewEntries(){
 
@@ -140,11 +156,9 @@ function viewProfile(){
                 window.location = "./index.html"
             }
             else{
+               
                 let entries=data["entries"]
                 if (entries){
-                    console.log(entries)
-                    console.log(entries.length)
-                   
                     document.getElementById("no_of_entries").innerHTML =`
                     <strong>Total Number of entries: </strong>${entries.length}` 
                 }
@@ -155,6 +169,7 @@ function viewProfile(){
                 }
             }
         })
+        .then(userDetails())
     }
     else{
         window.location = "./index.html"
