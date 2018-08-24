@@ -15,18 +15,23 @@ def register():
     ''' getting the data from the user in json form'''
     data =request.get_json()
     ''' validating signup fields'''
-    if  'password' not in data or data['password'].strip()=="":
+    if  'username' not in data: 
+        return jsonify({"message":"please add username"})
+    elif not re.match("[a-zA-Z]+",data['username']): 
+        return jsonify({"message":"Please add a valid username"})   
+    elif  'email' not in data:
+        return jsonify({"message":"please add email"})   
+    elif not re.match("[a-zA-Z0-9-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", data['email']):
+        return jsonify({"message":"please fill in a valid email adress"})
+    elif  'password' not in data or data['password']=="":
         return jsonify({"message":"please add password"})
-    elif  'confirm_password' not in data or data['confirm_password'].strip()=="":
+    elif re.match(".{3,}", data['password']):
+        return jsonify({"message":"The password should have atleast 3 characters"})
+    elif  'confirm_password' not in data: 
         return jsonify({"message":"please add confirm password"})
     elif data['password']!=data['confirm_password']:
         return jsonify({"message":"The passwords donot match, please try again"})
-    elif  'username' not in data or data['username'].strip()=="":
-        return jsonify({"message":"please add username"})
-    elif  'email' not in data:
-        return jsonify({"message":"please add email"})   
-    elif not re.match("[^t]+@[^t]+\.[^t]+", data['email']):
-        return jsonify({"message":"please fill in a valid email adress"})
+   
     '''creating an instance of  the User class'''
     user = User(
         data['email'], 
@@ -47,6 +52,12 @@ def register():
 def login():
     ''' getting data from the user in json form'''
     data = request.get_json()
+    if  'email' not in data:
+        return jsonify({"message":"please add email"})   
+    elif not re.match("[a-zA-Z0-9-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", data['email']):
+        return jsonify({"message":"please fill in a valid email adress"})
+    elif  'password' not in data or data['password']=="":
+        return jsonify({"message":"please add password"})
     ''' creating an instace of the user class'''
     user = User(data['email'],None,data['password'])
     duplicate = User(data['email'], None, None)
@@ -83,8 +94,12 @@ def entries():
         ''' validating fields when creating entry'''
         if  'title' not in data or data['title'].strip()=="":
             return jsonify({"message":"please add title"})
+        elif not re.match("[a-zA-Z]+",data['title']):
+            return jsonify({"message":"please add a valid title"})
         elif 'content' not in data or data['content'].strip()=="":
             return jsonify({"message":"please add content"})
+        elif not re.match("[a-zA-Z]+",data["content"]):
+            return jsonify({"message":"please add a valid content"})
         ''' creating an instance of Entry '''
         post_entry = Entry(current_user,data['title'], date , data['content'])
         '''check if the entry exists'''
@@ -170,3 +185,15 @@ def modify(entry_id):
         return jsonify({
             "message":"The entry has been deleted"
             }), 200
+@app.route("/api/v1/user", methods=['GET'])
+@jwt_required
+def getUser():
+    user_info ={}
+    current_user = get_jwt_identity()
+    if request.method == "GET":
+        user = User(current_user,None,None)
+        result=user.get_user()
+        user_info["email"] = result[0]
+        user_info["username"] = result[1]
+        return jsonify({"user":user_info})
+
