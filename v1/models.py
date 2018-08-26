@@ -17,7 +17,7 @@ class Database:
                 host=os.environ.get('HOST'),
                 user=os.environ.get('USER'),
                 password=os.environ.get('PASWORD'),
-                dbname=os.environ.get('HEROKUDB'),,
+                dbname=os.environ.get('HEROKUDB'),
                 port=os.environ.get('PORT'),
                 )
         else:
