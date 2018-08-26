@@ -2,7 +2,7 @@ import os
 import psycopg2
 
 app_config = {
-    "production": Production
+    "production": Production,
     "develop": Develop,
     "testing" : Testing,
    
