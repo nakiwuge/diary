@@ -9,6 +9,7 @@ env = environ['APP_SETTINGS']
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY']= 'secret'
 app.config.from_object(app_config[env])
+print(app_config[env])
 jwt = JWTManager(app)
 CORS(app)
 db_connection = app_config[env].conn
