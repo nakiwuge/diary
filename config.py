@@ -10,7 +10,16 @@ class Production:
         dbname='df3terog2vbq3c',
         port='5432'
         )
-        
+class Testing:
+    DEBUG = True
+    conn = psycopg2.connect(
+        host=os.environ.get('HOST'),
+        user=os.environ.get('DBUSER'),
+        password=os.environ.get('PASSWORD'),
+        dbname=os.environ.get('TESTDB')
+        )
+
+
 class Develop:
     DEBUG = True
     conn = psycopg2.connect(
@@ -20,14 +29,6 @@ class Develop:
         dbname=os.environ.get('DATABASE')
         )
     
-class Testing:
-    DEBUG = True
-    conn = psycopg2.connect(
-        host=os.environ.get('HOST'),
-        user=os.environ.get('DBUSER'),
-        password=os.environ.get('PASSWORD'),
-        dbname=os.environ.get('TESTDB')
-        )
 
 
 
