@@ -1,11 +1,33 @@
 import psycopg2
 from os import environ
-from v1 import db_connection
+from v1 import env
 
 '''creating tables'''
 class Database:
     def __init__(self):
-        self.conn = db_connection
+        if env == 'testing':
+            self.conn = psycopg2.connect(
+                host=os.environ.get('HOST'),
+                user=os.environ.get('DBUSER'),
+                password=os.environ.get('PASSWORD'),
+                dbname=os.environ.get('TESTDB')
+                )
+        elif env == "production":
+            self.conn = psycopg2.connect(
+                host=os.environ.get('HOST'),
+                user=os.environ.get('USER'),
+                password=os.environ.get('PASWORD'),
+                dbname=os.environ.get('HEROKUDB'),,
+                port=os.environ.get('PORT'),
+                )
+        else:
+            self.conn = psycopg2.connect(
+                host=os.environ.get('HOST'),
+                user=os.environ.get('DBUSER'),
+                password=os.environ.get('PASSWORD'),
+                dbname=os.environ.get('DATABASE')
+                )
+
         self.conn.autocommit = True
         self.c = self.conn.cursor()
         
