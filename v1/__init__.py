@@ -2,12 +2,14 @@ from os import environ
 from flask import Flask
 from flask_jwt_extended import  JWTManager
 from flask_cors import CORS
-from config import app_config
+from config import app_config, Production
 '''creating the app'''
 
 env = environ.get("APP_SETTINGS")
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY']= 'secret'
+if env == "production":
+    app.config.from_object(Production)
 
 app.config.from_object(app_config[env])
 print(app_config[env])
