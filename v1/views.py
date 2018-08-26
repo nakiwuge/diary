@@ -22,10 +22,10 @@ def register():
     elif  'email' not in data:
         return jsonify({"message":"please add email"})   
     elif not re.match("[a-zA-Z0-9-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+", data['email']):
-        return jsonify({"message":"please fill in a valid email adress"})
+        return jsonify({"message":"please fill in a valid email address"})
     elif  'password' not in data or data['password']=="":
         return jsonify({"message":"please add password"})
-    elif re.match(".{3,}", data['password']):
+    elif not re.match(".{3,}", data['password']):
         return jsonify({"message":"The password should have atleast 3 characters"})
     elif  'confirm_password' not in data: 
         return jsonify({"message":"please add confirm password"})
@@ -64,7 +64,7 @@ def login():
     find_dup = duplicate.check_duplicate()
     ''' checking if the user has ever signup with the provided email'''
     if not find_dup:
-        return jsonify({"message":"The email adress provided doesnot exist, please signup"})
+        return jsonify({"message":"The email address provided doesnot exist, please signup"})
     
     result=user.login_user()
     ''' password check'''
@@ -108,7 +108,7 @@ def entries():
        
         for title in find_dup:
             if title[0] == data['title']:
-                return jsonify({"message":"entry alredy exists"})
+                return jsonify({"message":"This entry already exists. Please use a different title"})
         ''' create an entry '''
         result=post_entry.add_entry()
         return jsonify({
@@ -156,14 +156,14 @@ def modify(entry_id):
         entries['content']=result[4]
         all_entries.append(entries) 
         return jsonify({"entry":all_entries}),200
-    elif request.method == 'GET':
+    elif request.method == 'PUT':
         ''' get modified data from user with json file '''
         data=request.get_json()
         
         result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
         ''' get date from database '''
         date = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
-        exp_date =  date + timedelta(minutes=1)
+        exp_date =  date + timedelta(hours=24)
         
         if now > exp_date:
             return jsonify({"message":"Sorry this entry cannot be edited. It is past 24 hours."})
@@ -174,10 +174,10 @@ def modify(entry_id):
         get_entry=Entry(None,data['title'], None, data['content']) 
         ''' modify entry'''
         get_entry.modify_entry(entry_id)
-        
+        result2 = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
         return jsonify({
-            "entry":result,
-            "message":"the update was successfully"
+            "entry":result2,
+            "message":"the update was successfull"
             }), 200
     else:
         get_entry=Entry(None,None,None,None)
@@ -185,6 +185,7 @@ def modify(entry_id):
         return jsonify({
             "message":"The entry has been deleted"
             }), 200
+            
 @app.route("/api/v1/user", methods=['GET'])
 @jwt_required
 def getUser():

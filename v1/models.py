@@ -1,17 +1,11 @@
 import psycopg2
-from v1 import app
+from os import environ
+from v1 import db_connection
+
 '''creating tables'''
 class Database:
     def __init__(self):
-      
-        self.conn = psycopg2.connect(
-            host='ec2-54-235-160-57.compute-1.amazonaws.com',
-            user='dejkpzjbrysvkp',
-            password='e44398dac8f32cdafd89972d4f254f311765bdb878c1dd327ce8f1576b692403',
-            dbname='df3terog2vbq3c',
-            port='5432'
-          
-    )
+        self.conn = db_connection
         self.conn.autocommit = True
         self.c = self.conn.cursor()
         
@@ -74,7 +68,6 @@ class User(Database):
         self.c.execute(command,(self.email,))
         value=self.c.fetchone()
         return value
-
 
 '''methods for the entry class'''        
 class Entry:
