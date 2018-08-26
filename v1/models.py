@@ -18,7 +18,7 @@ class Database:
                 user=os.environ.get('USER'),
                 password=os.environ.get('PASWORD'),
                 dbname=os.environ.get('HEROKUDB'),
-                port=os.environ.get('PORT'),
+                port=os.environ.get('PORT')
                 )
         else:
             self.conn = psycopg2.connect(
