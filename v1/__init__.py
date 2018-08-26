@@ -12,7 +12,6 @@ app.config.from_object(app_config[env])
 print(app_config[env])
 jwt = JWTManager(app)
 CORS(app)
-db_connection = app_config[env].conn
 
 ''' importing routes '''
 from v1 import views
