@@ -1,6 +1,13 @@
 import os
 import psycopg2
 
+app_config = {
+    "production": Production
+    "develop": Develop,
+    "testing" : Testing,
+   
+    
+ }
 class Develop:
     DEBUG = True
     conn = psycopg2.connect(
@@ -29,8 +36,3 @@ class Production:
         port='5432'
         )
 
-app_config = {
-     "production": Production
-    
-    
- }
