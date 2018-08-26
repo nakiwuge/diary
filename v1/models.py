@@ -1,5 +1,5 @@
 import psycopg2
-from os import environ
+import os 
 from v1 import env
 
 '''creating tables'''
