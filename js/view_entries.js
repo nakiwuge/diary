@@ -32,8 +32,7 @@ function userDetails(){
             <strong>Username: </strong>${user["email"]}`
         }
         
-    })
-    
+    })  
 
 }
 function cannotEdit(){
@@ -42,17 +41,15 @@ function cannotEdit(){
     .then((res) => res.json())
     .then((data) => {
         console.log(data)
-        let msg = data['message']
+        let msg = data["message"]
         if (msg == "Sorry you cannot modify this entry because it's past 24 hours"){
             alert(data["message"])
         }
         else{
             window.location = "./edit_content.html"
-
         }
     })
     
-
 }
 
 function viewEntries(){
