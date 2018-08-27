@@ -41,11 +41,8 @@ function editEntry(){
                 window.location = "./index.html"
             }
             else{
-                if (data["message"] == "Sorry this entry cannot be edited. It is past 24 hours."){
-                    alert(data["message"])
-                    window.location = "./view_content.html"
-                }
-                else if (data["message"]=="the update was successfully"){
+             
+                if (data["message"]=="the update was successfull"){
                     alert("Your entry has been updated!")
                     window.location = "./view_content.html"
                 }

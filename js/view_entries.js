@@ -35,6 +35,23 @@ function userDetails(){
     
 
 }
+function cannotEdit(){
+    fetch(url+"/"+get_id+"expired",options)
+    .then((res) => res.json())
+    .then((data) => {
+        console.log(data)
+        let msg = data['message']
+        if (msg == "Sorry you cannot modify this entry because it's past 24 hours"){
+            alert(data["message"])
+        }
+        else{
+            window.location = "./edit_content.html"
+
+        }
+    })
+    
+
+}
 
 function viewEntries(){
 
@@ -105,12 +122,11 @@ function viewContent(){
                         <div>
                             <p >${entry.date}</p> 
                             <p>${entry.content}</p>  
-                            <form class="text" action="edit_content.html">
-                                <button onClick="storeEntry('${entry.title}','${entry.content}','${entry.date}')"style="padding: 5px 20px;"type="submit" >edit</button>
-                            </form>
-                            <form class="text"action="#">
-                                <button onClick="deleteEntry()"  class="button-danger" " type="submit" >delete</button>
-                            </form>    
+                           
+                            <button class="text" onClick="cannotEdit(); storeEntry('${entry.title}','${entry.content}','${entry.date}'); "style="padding: 5px 20px;"type="submit" >edit</button>
+                           
+                            <buttonclass="text" onClick="deleteEntry()"  class="button-danger" " type="submit" >delete</button>
+                                
                         </div>  
                     `   
                 }else{
