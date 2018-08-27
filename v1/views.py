@@ -73,7 +73,7 @@ def login():
     result=user.login_user()
     ''' check password '''
     compare_passwords = check_password_hash(result[2],data['password'])
-    if  not result and not compare_passwords:
+    if not compare_passwords:
         return jsonify({"message":"wrong password or email"})
     ''' generating the jwt token'''
     token = create_access_token(identity=result[0] ,expires_delta=False)
