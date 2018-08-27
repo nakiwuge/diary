@@ -1,10 +1,11 @@
 import re
 import psycopg2
 from datetime import datetime ,timedelta
+from v1 import app, jwt
 from flask import request, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import  (create_access_token, 
 get_jwt_identity, jwt_required)
-from v1 import app,jwt
 from v1.models import User, Entry
 
 now = datetime.now()
@@ -33,10 +34,11 @@ def register():
         return jsonify({"message":"The passwords donot match, please try again"})
    
     '''creating an instance of  the User class'''
+    
     user = User(
         data['email'], 
         data['username'], 
-        data['password']
+        generate_password_hash(data['password'])
         )
     ''' checking email dublicates'''
     duplicate = User(data['email'], None, None)
@@ -44,6 +46,8 @@ def register():
 
     if find_dup:
         return jsonify({"message":"the email adress provided is already used"})
+
+    
     ''' adding the user to the database'''
     user.add_user()
     return jsonify({"message":"the registration was successful"}),200
@@ -58,8 +62,8 @@ def login():
         return jsonify({"message":"please fill in a valid email adress"})
     elif  'password' not in data or data['password']=="":
         return jsonify({"message":"please add password"})
-    ''' creating an instace of the user class'''
-    user = User(data['email'],None,data['password'])
+    
+    user = User(data['email'],None,None)
     duplicate = User(data['email'], None, None)
     find_dup = duplicate.check_duplicate()
     ''' checking if the user has ever signup with the provided email'''
@@ -67,11 +71,11 @@ def login():
         return jsonify({"message":"The email address provided doesnot exist, please signup"})
     
     result=user.login_user()
-    ''' password check'''
-    if  not result:
+    ''' check password '''
+    compare_passwords = check_password_hash(result[2],data['password'])
+    if  not result and not compare_passwords:
         return jsonify({"message":"wrong password or email"})
     ''' generating the jwt token'''
-  
     token = create_access_token(identity=result[0] ,expires_delta=False)
     return jsonify({
         "token":token,
@@ -159,15 +163,7 @@ def modify(entry_id):
     elif request.method == 'PUT':
         ''' get modified data from user with json file '''
         data=request.get_json()
-        
-        result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
-        ''' get date from database '''
-        date = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
-        exp_date =  date + timedelta(hours=24)
-        
-        if now > exp_date:
-            return jsonify({"message":"Sorry this entry cannot be edited. It is past 24 hours."})
-        elif  'title' not in data or data['title'].strip() == "":
+        if  'title' not in data or data['title'].strip() == "":
             return jsonify({"message":"please add title"})
         elif  'content' not in data or data['content'].strip() == "":
             return jsonify({"message":"please add content"})
@@ -185,7 +181,23 @@ def modify(entry_id):
         return jsonify({
             "message":"The entry has been deleted"
             }), 200
-            
+@app.route("/api/v1/entries/<int:entry_id>/expired", methods=['GET'])
+@jwt_required
+def modify_before_24hrs(entry_id):
+    ''' get current user '''
+    current_user = get_jwt_identity()
+    result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
+    ''' get date from database '''
+    date = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
+    exp_date =  date + timedelta(minutes=2)
+    if now > exp_date:
+       return jsonify({
+           "message":"Sorry you cannot modify this entry because it's past 24 hours"
+           })
+    return jsonify({
+        "message":"update allowed"
+        }), 200
+
 @app.route("/api/v1/user", methods=['GET'])
 @jwt_required
 def getUser():
@@ -193,8 +205,9 @@ def getUser():
     current_user = get_jwt_identity()
     if request.method == "GET":
         user = User(current_user,None,None)
-        result=user.get_user()
+        result=user.login_user()
         user_info["email"] = result[0]
         user_info["username"] = result[1]
         return jsonify({"user":user_info})
+
 

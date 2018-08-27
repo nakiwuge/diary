@@ -81,16 +81,11 @@ class User(Database):
         return value
     ''' loggin a user '''
     def login_user(self):
-        command ="SELECT email FROM users WHERE email = %s AND password=%s"
-        self.c.execute(command,(self.email, self.password))
-        value=self.c.fetchone()
-        return value
-    def get_user(self):
-        command ="SELECT email,username FROM users WHERE email = %s"
+        command ="SELECT * FROM users WHERE email = %s "
         self.c.execute(command,(self.email,))
         value=self.c.fetchone()
         return value
-
+   
 '''methods for the entry class'''        
 class Entry:
     def __init__(self,email, title,date,content):
