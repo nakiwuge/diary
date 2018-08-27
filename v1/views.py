@@ -189,7 +189,7 @@ def modify_before_24hrs(entry_id):
     result = Entry(current_user,None,None,None).get_entry_by_id(entry_id)
     ''' get date from database '''
     date = datetime.strptime(result[3], '%Y-%m-%d %H:%M:%S')
-    exp_date =  date + timedelta(minutes=2)
+    exp_date =  date + timedelta(hours=24)
     if now > exp_date:
        return jsonify({
            "message":"Sorry you cannot modify this entry because it's past 24 hours"
