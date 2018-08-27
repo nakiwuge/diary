@@ -20,6 +20,7 @@ function storeEntry(x,y,z){
     localStorage.setItem("date", z)
 }
 function userDetails(){
+    
     fetch("https://diarydeploy.herokuapp.com/api/v1/user",options)
     .then((res) => res.json())
     .then((data) => {
@@ -36,7 +37,8 @@ function userDetails(){
 
 }
 function cannotEdit(){
-    fetch(url+"/"+get_id+"expired",options)
+    let get_id = localStorage.getItem("id")
+    fetch(url+"/"+get_id+"/expired",options)
     .then((res) => res.json())
     .then((data) => {
         console.log(data)
