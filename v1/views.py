@@ -6,7 +6,7 @@ from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import  (create_access_token, 
 get_jwt_identity, jwt_required)
-from v1.models import User, Entry
+from v1.models import User, Entry, Notifications
 
 now = datetime.now()
 
@@ -209,6 +209,23 @@ def getUser():
         user_info["email"] = result[0]
         user_info["username"] = result[1]
         return jsonify({"user":user_info})
+
+@app.route("/api/v1/entries/notify", methods=['GET', 'POST'])
+@jwt_required
+def reminder():
+    date = now.strftime("%Y-%m-%d %H:%M:%S")
+    current_user = get_jwt_identity()
+  
+    if request.method == "POST":
+        data = request.get_json()
+        reminder = Notifications(current_user,data["title"],data['date'])
+        reminder.add_reminder()
+        return jsonify({"message":"The reminder has been added"})
+    else:
+        reminder = Notifications(current_user,None,None)
+        result = reminder.get_reminder()
+        return jsonify({"message":result})
+ 
 
 
 

@@ -49,7 +49,18 @@ class Database:
                     REFERENCES users (email)
                     ON UPDATE CASCADE ON DELETE CASCADE
                     
+                )''',
+                ''' CREATE TABLE IF NOT EXISTS notifications(
+                    email VARCHAR(100),
+                    id SERIAL PRIMARY KEY,
+                    title VARCHAR(100),
+                    date VARCHAR(50),
+                    FOREIGN KEY (email)
+                    REFERENCES users (email)
+                    ON UPDATE CASCADE ON DELETE CASCADE
+                    
                 )'''
+
             
             )
             
@@ -127,6 +138,22 @@ class Entry:
     def delete_entry(self,entry_id):
         command = "DELETE FROM entries WHERE entry_id = %s"
         self.c.execute(command,(entry_id,))
+class Notifications:
+    def __init__(self,email, title,date):
+        Database.__init__(self)
+        self.email = email
+        self.title = title
+        self.date = date
+    def add_reminder(self):
+        command = '''INSERT INTO notifications (email,title, date)
+        VALUES (%s, %s, %s)'''
+        self.c.execute(command, (self.email,self.title, self.date))
+    
+    def get_reminder(self):
+        command = "SELECT * FROM notifications WHERE email = %s "
+        self.c.execute(command,(self.email,))
+        value=self.c.fetchall()
+        return value
 
 db=Database()
 
