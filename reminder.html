@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <script src="js/main.js"></script>
+    <script src="js/view_entries.js"></script>
+    <script src="js/reminder.js"></script>
+</head>
+<body onload="viewProfile()">
+    <header >
+        <div class="container">
+            <div id="brand-name">
+                <a href="home.html"><h2 >My Diary</h2></a>
+            </div>
+            <nav>
+                <a href="home.html">Home</a>
+                <a href="add_entry.html">Add Entry</a>
+                <div class="nav-right">
+                    <a href="profile.html">Profile</a>
+                    <a onClick="emptyLocalStorage()" href="index.html">Logout</a>
+                </div>
+            </nav>   
+        <div>
+    </header>
+    <div class="container" >
+            <h1 class="entries">Set a reminder</h1>
+            <form >  
+                    <hr>
+                    <label for="title"><b>Title</b></label>
+                    <input type="text" placeholder="Enter Title" name="title" >
+                    <label for="from">From</label>
+                    <input type="text" placeholder="YYYY-MM-DD H:M" name="from" >
+                    <label for="to">TO</label>
+                    <input type="text" placeholder="YYYY-MM-DD H:M" name="to" >
+                    <button type="submit">Save</button> 
+                    <hr>   
+                </form>
+    </div>  
+</body>
+</html>
