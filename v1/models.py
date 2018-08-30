@@ -50,11 +50,12 @@ class Database:
                     ON UPDATE CASCADE ON DELETE CASCADE
                     
                 )''',
-                ''' CREATE TABLE IF NOT EXISTS notifications(
+                ''' CREATE TABLE IF NOT EXISTS reminders(
                     email VARCHAR(100),
                     id SERIAL PRIMARY KEY,
                     title VARCHAR(100),
-                    date VARCHAR(50),
+                    start_date VARCHAR(50),
+                    end_date VARCHAR(50),
                     FOREIGN KEY (email)
                     REFERENCES users (email)
                     ON UPDATE CASCADE ON DELETE CASCADE
@@ -138,19 +139,20 @@ class Entry:
     def delete_entry(self,entry_id):
         command = "DELETE FROM entries WHERE entry_id = %s"
         self.c.execute(command,(entry_id,))
-class Notifications:
-    def __init__(self,email, title,date):
+class Reminders:
+    def __init__(self,email, title,start_date,end_date):
         Database.__init__(self)
         self.email = email
         self.title = title
-        self.date = date
+        self.start_date = start_date
+        self.end_date = end_date
     def add_reminder(self):
-        command = '''INSERT INTO notifications (email,title, date)
-        VALUES (%s, %s, %s)'''
-        self.c.execute(command, (self.email,self.title, self.date))
+        command = '''INSERT INTO reminders (email,title, start_date,end_date)
+        VALUES (%s, %s, %s, %s)'''
+        self.c.execute(command, (self.email,self.title, self.start_date,self.end_date))
     
     def get_reminder(self):
-        command = "SELECT * FROM notifications WHERE email = %s "
+        command = "SELECT * FROM reminders WHERE email = %s"
         self.c.execute(command,(self.email,))
         value=self.c.fetchall()
         return value

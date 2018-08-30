@@ -6,7 +6,7 @@ from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import  (create_access_token, 
 get_jwt_identity, jwt_required)
-from v1.models import User, Entry, Notifications
+from v1.models import User, Entry, Reminders
 
 now = datetime.now()
 
@@ -213,18 +213,41 @@ def getUser():
 @app.route("/api/v1/entries/notify", methods=['GET', 'POST'])
 @jwt_required
 def reminder():
-    date = now.strftime("%Y-%m-%d %H:%M:%S")
+   
     current_user = get_jwt_identity()
-  
     if request.method == "POST":
         data = request.get_json()
-        reminder = Notifications(current_user,data["title"],data['date'])
+        try:
+            datetime.strptime(data["start_date"], "%Y-%m-%d %H:%M")
+            datetime.strptime(data["end_date"], "%Y-%m-%d %H:%M")
+            
+        except:
+            return jsonify({"message":"Incorrect data format, should be YYYY-MM-DD H:M"})
+        reminder = Reminders(current_user,data["title"],data['start_date'],data["end_date"])
         reminder.add_reminder()
         return jsonify({"message":"The reminder has been added"})
     else:
-        reminder = Notifications(current_user,None,None)
-        result = reminder.get_reminder()
-        return jsonify({"message":result})
+        all_reminders =[]
+        today = now.strftime("%Y-%m-%d %H:%M")
+        reminder =Reminders(current_user,None,None,None)
+        results = reminder.get_reminder()
+        for result in results:
+            reminders = {}
+            reminders["email"] = result[0]
+            reminders["id"] = result[1]
+            reminders["title"] = result[2]
+            reminders["start_date"] = result[3]
+            reminders["end_date"] = result[4]
+            all_reminders.append(reminders) 
+        for reminder in results:
+
+            if reminder[3] >= today and reminder[4] > today:
+                return jsonify({
+                    "reminder":reminder})
+            else:
+                return jsonify({"message":"there are no reminders for this day"})
+
+        
  
 
 
