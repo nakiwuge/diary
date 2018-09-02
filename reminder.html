@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <script src="js/main.js"></script>
-    <script src="js/view_entries.js"></script>
-    <script src="js/reminder.js"></script>
+   
+ 
 </head>
-<body onload="viewProfile()">
+<body >
     <header >
         <div class="container">
             <div id="brand-name">
@@ -26,19 +26,21 @@
             </nav>   
         <div>
     </header>
-    <div class="container" >
+    <div id="reminder"class="container" >
             <h1 class="entries">Set a reminder</h1>
+            <p  class="error" id="reminder_error"><p>
             <form >  
                     <hr>
                     <label for="title"><b>Title</b></label>
-                    <input type="text" placeholder="Enter Title" name="title" >
+                    <input type="text" id="reminder_title" placeholder="Enter Title" name="title" >
                     <label for="from">From</label>
-                    <input type="text" placeholder="YYYY-MM-DD H:M" name="from" >
+                    <input type="text" id="from" placeholder="YYYY-MM-DD H:M" name="from" >
                     <label for="to">TO</label>
-                    <input type="text" placeholder="YYYY-MM-DD H:M" name="to" >
+                    <input id="to" type="text" placeholder="YYYY-MM-DD H:M" name="to" >
                     <button type="submit">Save</button> 
                     <hr>   
                 </form>
     </div>  
 </body>
+<script src="js/reminder.js"></script>
 </html>

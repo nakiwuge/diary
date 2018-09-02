@@ -7,7 +7,7 @@ let get_title = localStorage.getItem("title")
 let get_content = localStorage.getItem("content")
 let get_date = localStorage.getItem("date")
 
-document.getElementById("edit_entry"),addEventListener("submit" ,editEntry)
+document.getElementById("edit_entry").addEventListener("submit" ,editEntry)
 document.getElementById("editTitle").value  = get_title
 document.getElementById("editDate").innerHTML  = get_date
 document.getElementById("editContent").value  = get_content
